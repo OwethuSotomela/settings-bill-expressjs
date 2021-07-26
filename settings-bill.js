@@ -71,19 +71,19 @@ module.exports = function settBill() {
         return {
             smsTotal,
             callTotal,
-            grandTotal : grandTotal()
+            grandTotal: grandTotal()
         }
     }
-    function warningLevelExpress(){
+    function warningLevelExpress() {
         const total = grandTotal();
-        const reachedWarningLevel = total >= warningLevel 
-            && total < criticalLevel;
+        const reachedWarningLevel = total >= warningLevel2
+            && total < criticalLevel2;
 
         return reachedWarningLevel;
     }
-    function criticalLevelEpress(){
+    function criticalLevelEpress() {
         const total = grandTotal();
-        return total >= criticalLevel;
+        return total >= criticalLevel2;
     }
     function setCallCost(setCall) {
         callUpdate1 = parseFloat(setCall);

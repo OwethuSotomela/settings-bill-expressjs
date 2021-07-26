@@ -1,8 +1,7 @@
 const assert = require('assert');
-
 const settBill = require('../settings-bill');
 
- describe('settBill', function () {
+describe('settings-Bill', function () {
     it('Should be able to set call costs, calculate and return the costs of two calls', function () {
         let mySett = settBill();
         mySett.setCallCost(2.00);
@@ -209,13 +208,13 @@ const settBill = require('../settings-bill');
         it('Should be able to set the critical level', function () {
 
             let mySett = settBill();
-    
+
             mySett.setCallCost(1.35);
             mySett.setSmsCost(0.85);
-    
+
             mySett.setWarningLevel2(10)
             mySett.setCriticalLevel2(15);
-    
+
             mySett.makeCall();
             mySett.makeCall();
             mySett.makeSms();
@@ -231,7 +230,7 @@ const settBill = require('../settings-bill');
             mySett.makeCall();
             mySett.makeCall();
             mySett.makeSms();
-    
+
             assert.equal("danger", mySett.addClass1());
         })
     })
@@ -338,7 +337,7 @@ const settBill = require('../settings-bill');
         assert.equal(2.7, mySett.getTotalCallCost());
         assert.equal(1.7, mySett.getTotalSmsCost());
     })
-    
+
     it('Should be able to set the critical and warning levels', function () {
 
         let mySett = settBill();
@@ -405,4 +404,104 @@ const settBill = require('../settings-bill');
         assert.equal('20', mySett.getWarningLevel2());
         assert.equal('30', mySett.getCriticalLevel2());
     })
+
+    describe('settings-bill', function () {
+
+        let mySett = settBill();
+
+        it('Should be able to record calls', function () {
+            mySett.billSettAction('call');
+            assert.equal(1, mySett.actionsFor('call').length);
+        });
+
+        it('Should be able to set sms costs', function () {
+            mySett.setSmsCost(0.85)
+            assert.equal(0.85, mySett.getSmsCostExpress())
+        });
+
+        it('Should be able to set call costs', function () {
+            mySett.setCallCost(2.65)
+            assert.equal(2.65, mySett.getCallCostEpress())
+        });
+
+        it('Should be able to set the warning level costs', function () {
+            mySett.setWarningLevel2(2.65)
+            assert.equal(2.65, mySett.getWarningLevel2())
+        });
+
+        it('Should be able to set the critical level costs', function () {
+            mySett.setCriticalLevel2(2.65)
+            assert.equal(2.65, mySett.getCriticalLevel2())
+        });
+
+        it('Should calculate the right totals', function () {
+            const mySett = settBill();
+            mySett.setCallCost(2.35)
+            mySett.setSmsCost(1.50)
+
+            mySett.billSettAction('call');
+            mySett.billSettAction('sms');
+
+            assert.equal(1.50, mySett.totals().smsTotal);
+            assert.equal(2.35, mySett.totals().callTotal);
+            assert.equal(3.85, mySett.totals().grandTotal);
+        });
+
+        it('Should calculate the right totals for multiple actions', function () {
+            const mySett = settBill();
+            mySett.setCallCost(2.35)
+            mySett.setCallCost(2.35)
+            mySett.setSmsCost(1.50);
+            mySett.setSmsCost(1.50);
+
+            mySett.billSettAction('call');
+            mySett.billSettAction('call');
+            mySett.billSettAction('sms');
+            mySett.billSettAction('sms');
+
+            assert.equal(3.00, mySett.totals().smsTotal);
+            assert.equal(4.70, mySett.totals().callTotal);
+            assert.equal(7.70, mySett.totals().grandTotal);
+        });
+
+        it('should know when warning level reached', function () {
+            const mySett = settBill();
+            mySett.setCallCost(2.35);
+            mySett.setSmsCost(1.50);
+            mySett.setWarningLevel2(5);
+            mySett.setCriticalLevel2(10);
+
+            mySett.billSettAction('call');
+            mySett.billSettAction('call');
+            mySett.billSettAction('sms');
+            mySett.billSettAction('sms');
+
+            assert.equal(true, mySett.warningLevelExpress());
+        });
+
+        it('should know when critical level reached', function () {
+            const mySett = settBill();
+            mySett.setCallCost(2.35);
+            mySett.setSmsCost(1.50);
+            mySett.setWarningLevel2(5);
+            mySett.setCriticalLevel2(10);
+
+            // mySett.setSettings({
+            //     smsCost: 2.50,
+            //     callCost: 5.00,
+            //     warningLevel: 5,
+            //     criticalLevel: 10
+            // });
+
+            mySett.billSettAction('call');
+            mySett.billSettAction('call');
+            mySett.billSettAction('call');
+            mySett.billSettAction('call');
+            mySett.billSettAction('sms');
+            mySett.billSettAction('sms');
+            mySett.billSettAction('sms');
+
+            assert.equal(true, mySett.criticalLevelEpress());
+        });
+    });
 })

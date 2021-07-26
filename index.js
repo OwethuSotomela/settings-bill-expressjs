@@ -15,10 +15,12 @@ app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
 
 app.get('/', function (req, res) {
-    res.render('index', { forCalls: settingsBill.getCallCostEpress(),
+    res.render('index', {
+        forCalls: settingsBill.getCallCostEpress(),
         forSmses: settingsBill.getSmsCostExpress(),
         forWarning: settingsBill.getWarningLevel2(),
-        forCritical: settingsBill.getCriticalLevel2(), totals: settingsBill.totals()})
+        forCritical: settingsBill.getCriticalLevel2(), totals: settingsBill.totals()
+    })
 });
 
 app.post('/settings', function (req, res) {
@@ -32,7 +34,7 @@ app.post('/settings', function (req, res) {
     console.log(settingsBill.getSmsCostExpress());
     console.log(settingsBill.getWarningLevel2());
     console.log(settingsBill.getCriticalLevel2());
-    
+
     res.redirect('/');
 });
 
@@ -42,12 +44,12 @@ app.post('/action', function (req, res) {
 });
 
 app.get('/actions', function (req, res) {
-    res.render("actions", {actions: settingsBill.getTheList()});
+    res.render("actions", { actions: settingsBill.getTheList() });
 });
 
 app.get('/actions/:type', function (req, res) {
     const type = req.params.type;
-    res.render("actions", {actions: settingsBill.actionsFor(type)});
+    res.render("actions", { actions: settingsBill.actionsFor(type) });
 });
 
 const PORT = process.env.PORT || 8080;
