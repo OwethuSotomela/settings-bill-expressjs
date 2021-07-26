@@ -92,7 +92,7 @@ module.exports = function settBill() {
         return callSettTotal.toFixed(2);
     }
     function getCallCostEpress() {
-        return callUpdate1;
+        return callUpdate1.toFixed(2);
     }
     function setSmsCost(setSms) {
         smsUpdate1 = parseFloat(setSms);
@@ -101,7 +101,7 @@ module.exports = function settBill() {
         return smSettTotal.toFixed(2);
     }
     function getSmsCostExpress() {
-        return smsUpdate1;
+        return smsUpdate1.toFixed(2);
     }
     function makeCall() {
         callSettTotal += callUpdate1;
