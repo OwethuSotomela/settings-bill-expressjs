@@ -20,7 +20,8 @@ app.get('/', function (req, res) {
         forCalls: settingsBill.getCallCostEpress(),
         forSmses: settingsBill.getSmsCostExpress(),
         forWarning: settingsBill.getWarningLevel2(),
-        forCritical: settingsBill.getCriticalLevel2(), totals: settingsBill.totals()
+        forCritical: settingsBill.getCriticalLevel2(), totals: settingsBill.totals(),
+        colorExpress: settingsBill.colorExpress(),
     })
 });
 
@@ -50,11 +51,12 @@ app.get('/actions', function (req, res) {
     actions.forEach((value) => {
         value.timestampago = moment(value.timestamp).fromNow();
     })
+    // console.log(colorExpress)
+
     res.render("actions", { actions });
 });
 
 app.get('/actions/:type', function (req, res) {
-
     const actions = settingsBill.getTheList();
     actions.forEach((value) => {
         value.timestampago = moment(value.timestamp).fromNow();

@@ -26,12 +26,15 @@ module.exports = function settBill() {
     }
     function billSettAction(billSettAction) {
         let cost = 0;
-        if (billSettAction === "call") {
-            cost = callUpdate1;
+        if (!criticalLevelEpress()) {
+            if (billSettAction === "call") {
+                cost = callUpdate1;
+            }
+            else if (billSettAction === "sms") {
+                cost = smsUpdate1;
+            }
         }
-        else if (billSettAction === "sms") {
-            cost = smsUpdate1;
-        }
+
         if (cost !== 0) {
             billSettActionList.push({
                 type: billSettAction,
@@ -81,12 +84,21 @@ module.exports = function settBill() {
         const total = grandTotal();
         const reachedWarningLevel = total >= warningLevel2
             && total < criticalLevel2;
-
         return reachedWarningLevel;
     }
     function criticalLevelEpress() {
         const total = grandTotal();
         return total >= criticalLevel2;
+    }
+    function colorExpress() {
+        let color = ""
+        if (criticalLevelEpress()) {
+            color = "danger"
+        }
+        if (warningLevelExpress()) {
+            color = "warning"
+        }
+        return color
     }
     function setCallCost(setCall) {
         callUpdate1 = parseFloat(setCall);
@@ -181,5 +193,6 @@ module.exports = function settBill() {
         criticalLevelEpress,
         totals,
         actionsFor,
+        colorExpress,
     }
 }
