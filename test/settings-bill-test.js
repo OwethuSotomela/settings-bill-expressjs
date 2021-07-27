@@ -411,6 +411,7 @@ describe('settings-Bill', function () {
 
         it('Should be able to record calls', function () {
             mySett.setCallCost(2.90);
+            mySett.setCriticalLevel2(8.00);
             mySett.billSettAction('call');
             assert.equal(1, mySett.actionsFor('call').length);
         });
@@ -439,6 +440,7 @@ describe('settings-Bill', function () {
             const mySett = settBill();
             mySett.setCallCost(2.35)
             mySett.setSmsCost(1.50)
+            mySett.setCriticalLevel2(15.00);
 
             mySett.billSettAction('call');
             mySett.billSettAction('sms');
@@ -454,6 +456,7 @@ describe('settings-Bill', function () {
             mySett.setCallCost(2.35)
             mySett.setSmsCost(1.50);
             mySett.setSmsCost(1.50);
+            mySett.setCriticalLevel2(20.00);
 
             mySett.billSettAction('call');
             mySett.billSettAction('call');
