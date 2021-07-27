@@ -32,11 +32,14 @@ module.exports = function settBill() {
         else if (billSettAction === "sms") {
             cost = smsUpdate1;
         }
-        billSettActionList.push({
-            type: billSettAction,
-            cost,
-            timestamp: new Date()
-        });
+        if (cost !== 0) {
+            billSettActionList.push({
+                type: billSettAction,
+                cost,
+                timestamp: new Date()
+            });
+        }
+
     }
     function getTheList() {
         return billSettActionList;
@@ -121,13 +124,13 @@ module.exports = function settBill() {
         warningLevel2 = parseFloat(warning2);
     }
     function getWarningLevel2() {
-        return warningLevel2;
+        return warningLevel2.toFixed(2);
     }
     function setCriticalLevel2(critical2) {
         criticalLevel2 = parseFloat(critical2);
     }
     function getCriticalLevel2() {
-        return criticalLevel2;
+        return criticalLevel2.toFixed(2);
     }
     function addClass1() {
         if (totalSett >= criticalLevel2) {
