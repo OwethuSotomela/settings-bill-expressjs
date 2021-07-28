@@ -45,6 +45,12 @@ app.post('/action', function (req, res) {
     res.redirect('/');
 });
 
+
+app.post('/reset', function (req, res) {
+    settingsBill.resetBtn();
+    res.redirect('/');
+});
+
 app.get('/actions', function (req, res) {
 
     const actions = settingsBill.getTheList();

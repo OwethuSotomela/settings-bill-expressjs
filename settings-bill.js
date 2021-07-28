@@ -11,6 +11,11 @@ module.exports = function settBill() {
 
     var billSettActionList = [];
 
+    function resetBtn() {
+        billSettActionList = [];
+
+    }
+
     function billSett2(billSettEntered) {
         if (totalSett < criticalLevel2) {
 
@@ -194,5 +199,6 @@ module.exports = function settBill() {
         totals,
         actionsFor,
         colorExpress,
+        resetBtn
     }
 }
