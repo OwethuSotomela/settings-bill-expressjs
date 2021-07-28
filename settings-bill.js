@@ -13,9 +13,7 @@ module.exports = function settBill() {
 
     function resetBtn() {
         billSettActionList = [];
-
     }
-
     function billSett2(billSettEntered) {
         if (totalSett < criticalLevel2) {
 
@@ -39,7 +37,6 @@ module.exports = function settBill() {
                 cost = smsUpdate1;
             }
         }
-
         if (cost !== 0) {
             billSettActionList.push({
                 type: billSettAction,
@@ -47,12 +44,10 @@ module.exports = function settBill() {
                 timestamp: new Date()
             });
         }
-
     }
     function getTheList() {
         return billSettActionList;
     }
-
     function actionsFor(type) {
         const filteredActions = [];
         for (let index = 0; index < billSettActionList.length; index++) {
@@ -93,7 +88,7 @@ module.exports = function settBill() {
     }
     function criticalLevelEpress() {
         const total = grandTotal();
-        return total >= criticalLevel2;
+        return total >= criticalLevel2 && criticalLevel2 !== 0;
     }
     function colorExpress() {
         let color = ""
